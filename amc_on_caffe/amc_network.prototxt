@@ -1,0 +1,86 @@
+name: "amc_net"
+
+layer {
+    name: "data"
+    type: "HDF5Data"
+    top: "data"
+    top: "label"
+    include {
+        phase: TRAIN
+    }
+    hdf5_data_param {
+        source: "train_data.txt"
+        batch_size: 64
+    }
+}
+
+layer {
+    name: "data"
+    type: "HDF5Data"
+    top: "data"
+    top: "label"
+    include {
+        phase: TEST
+    }
+    hdf5_data_param {
+        source: "test_data.txt"
+        batch_size: 64
+    }
+}
+
+layer {
+  name: "conv"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv"
+  convolution_param {
+    num_output: 16
+    kernel_h: 2
+    kernel_w: 2
+    stride: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+    name: "flatten"
+    type: "Flatten"
+    bottom: "conv"
+    top: "output"
+}
+
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "output"
+  top: "ip1"
+  inner_product_param {
+    num_output: 1
+  }
+}
+
+layer {
+    name: "loss"
+    type: "SigmoidCrossEntropyLoss"
+    bottom: "ip1"
+    bottom: "label"
+    top: "loss"
+}
+
+layer {
+    name: "accuracy"
+    type: "Accuracy"
+    bottom: "ip1"
+    bottom: "label"
+    top: "accuracy"
+    include {
+        phase: TEST
+    }
+}
