@@ -1,2 +1,11 @@
 # amc_baby_models
-Automatic Modulation Classification implemented on different deep learning frameworks. This is intended as a starting point showing one way of handling raw (I/Q) comms data so it can be used in deep learning models for peeps who are trying to get started with AMC or similar applications of DL for comms.
+
+This repo shows how to train a simple neural network for Automatic Modulation Classification (AMC) using a couple different frameworks. No reason to get tied down to one, right? Included is a tiny dataset generated using matlab with 4 classes (BPSK, QPSK, PAM4, GMSK) to use on all the jupyter notebooks.
+
+
+
+## Included notebooks
+
+* PyTorch 1.3
+* Tensorflow 2.0 (with Keras)
+* MATLAB
